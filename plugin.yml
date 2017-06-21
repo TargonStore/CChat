@@ -1,0 +1,6 @@
+name: TargonCChat
+version: 1.0
+main: net.JaoBalalao.TargonCChat.Main
+commands:
+  clearchat:
+    aliases: [cc, clearc, cchat]
