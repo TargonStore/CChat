@@ -16,15 +16,23 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin implements CommandExecutor {
 
+	private boolean chatMsg;
+	private boolean chatAction;
 	private int TempoTotal;
 	private int TempoAviso;
 	private List<String> iraLimparAutomatico = new ArrayList<>();
 	private List<String> chatLimpoAutomatico = new ArrayList<>();
 	private List<String> iraLimparAdmin = new ArrayList<>();
 	private List<String> chatLimpoAdmin = new ArrayList<>();
+	private String iraLimparAutomatico_AB;
+	private String chatLimpoAutomatico_AB;
+	private String iraLimparAdmin_AB;
+	private String chatLimpoAdmin_AB;
 
 	private BukkitTask task;
 
+	ActionBar ac = new ActionBar();
+	
 	@Override
 	public void onEnable() {
 
@@ -33,12 +41,18 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
 		saveDefaultConfig();
 
+		chatMsg = getConfig().getBoolean("TargonCChat.Config.useChatMsg");
+		chatAction = getConfig().getBoolean("TargonCChat.Config.useActionBar");
 		TempoTotal = getConfig().getInt("TargonCChat.Config.tempoTotal");
 		TempoAviso = getConfig().getInt("TargonCChat.Config.tempoAviso");
 		iraLimparAutomatico = getConfig().getStringList("TargonCChat.Mensagens.iraLimparAutomatico");
 		chatLimpoAutomatico = getConfig().getStringList("TargonCChat.Mensagens.chatLimpoAutomatico");
 		iraLimparAdmin = getConfig().getStringList("TargonCChat.Mensagens.iraLimparAdmin");
 		chatLimpoAdmin = getConfig().getStringList("TargonCChat.Mensagens.chatLimpoAdmin");
+		iraLimparAutomatico_AB = getConfig().getString("TargonCChat.Mensagens.iraLimparAutomatico_ActionBar");
+		chatLimpoAutomatico_AB = getConfig().getString("TargonCChat.Mensagens.chatLimpoAutomatico_ActionBar");
+		iraLimparAdmin_AB = getConfig().getString("TargonCChat.Mensagens.iraLimparAdmin_ActionBar");
+		chatLimpoAdmin_AB = getConfig().getString("TargonCChat.Mensagens.chatLimpoAdmin_ActionBar");
 
 		getCommand("clearchat").setExecutor(this);
 		
@@ -51,9 +65,15 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
 				if (Tempo == TempoAviso) {
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						for (String s : iraLimparAutomatico) {
-							p.sendMessage(
-									ChatColor.translateAlternateColorCodes('&', s.replace("{tempo}", "" + Tempo)));
+						if(chatMsg) {
+							for (String s : iraLimparAutomatico) {
+								p.sendMessage(
+										ChatColor.translateAlternateColorCodes('&', s.replace("{tempo}", "" + Tempo)));
+							}
+						}
+						if(chatAction) {
+							ac.send(p, ChatColor.translateAlternateColorCodes('&', iraLimparAutomatico_AB.replace("{tempo}", "" + Tempo)));
+						
 						}
 					}
 				}
@@ -63,8 +83,13 @@ public class Main extends JavaPlugin implements CommandExecutor {
 						for (int i = 0; i < 250; i++) {
 							p.sendMessage(" ");
 						}
-						for (String s : chatLimpoAutomatico) {
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
+						if(chatMsg) {
+							for (String s : chatLimpoAutomatico) {
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
+							}
+						}
+						if(chatAction) {
+							ac.send(p, ChatColor.translateAlternateColorCodes('&', chatLimpoAutomatico_AB));
 						}
 					}
 					Tempo = TempoTotal;
@@ -86,7 +111,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 		if(args.length > 0) {
-			sender.sendMessage("§c* Muitos argumentos!");
+			sender.sendMessage("Â§c* Muitos argumentos!");
 		}
 		
 		String admin;
@@ -98,16 +123,22 @@ public class Main extends JavaPlugin implements CommandExecutor {
 		}
 
 		if (!sender.hasPermission("TargonCChat.ClearChat")) {
-			sender.sendMessage("§cSem permissão.");
+			sender.sendMessage("Â§cSem permissÃ£o.");
 			return true;
 		}
 
-		sender.sendMessage("§a* Você agendou uma limpeza de chat!");
+		sender.sendMessage("Â§a* VocÃª agendou uma limpeza de chat!");
 		
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			for (String s : iraLimparAdmin) {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						s.replace("{tempo}", "" + TempoAviso).replace("{admin}", admin)));
+			if(chatMsg) {
+				for (String s : iraLimparAdmin) {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+							s.replace("{tempo}", "" + TempoAviso).replace("{admin}", admin)));
+				}
+			}
+			if(chatAction) {
+				ac.send(p, ChatColor.translateAlternateColorCodes('&',
+							iraLimparAdmin_AB.replace("{tempo}", "" + TempoAviso).replace("{admin}", admin)));
 			}
 		}
 
@@ -119,8 +150,13 @@ public class Main extends JavaPlugin implements CommandExecutor {
 					for (int i = 0; i < 250; i++) {
 						p.sendMessage(" ");
 					}
-					for (String s : chatLimpoAdmin) {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', s.replace("{admin}", admin)));
+					if(chatMsg) {
+						for (String s : chatLimpoAdmin) {
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', s.replace("{admin}", admin)));
+						}
+					}
+					if(chatAction) {
+						ac.send(p, ChatColor.translateAlternateColorCodes('&', chatLimpoAdmin_AB.replace("{admin}", admin)));
 					}
 				}
 			}
