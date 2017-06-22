@@ -2,11 +2,19 @@ TargonCChat:
   
   Config:
   
-    # De quanto em quanto tempo o chat ir· limpar automaticamente ?
+    # Enviar mensagens no chat ?
+    # true / false
+    useChatMsg: true
+    
+    # Enviar mensagens na ActionBar ?
+    # true / false
+    useActionBar: true
+  
+    # De quanto em quanto tempo o chat ir√° limpar automaticamente ?
     # Em SEGUNDOS!
     tempoTotal: 600
     
-    # O aviso ser· dado em quanto tempo ?
+    # O aviso ser√° dado em quanto tempo ?
     # Em SEGUNDOS!
     tempoAviso: 10
     
@@ -14,7 +22,7 @@ TargonCChat:
   
     # Mensagem de aviso quando o tempo atingir o "tempoAviso" acima.
     iraLimparAutomatico:
-      - '&7* O Chat ser· limpo daqui a &6{tempo} &7segundos!'
+      - '&7* O Chat ser√° limpo daqui a &6{tempo} &7segundos!'
       - '&7* Plugin by &6JaoBalalao&7.'
     
     # Mensagem de aviso quando o tempo zerar e o chat for limpo.
@@ -22,13 +30,25 @@ TargonCChat:
       - '&7* O Chat foi limpo automaticamente!'
       - '&7* Plugin by &6JaoBalalao&7.'
       
-    # Mensagem que aparecer· ao digitar o comando /clearchat.
+    # Mensagem que aparecer√° ao digitar o comando /clearchat.
     iraLimparAdmin:
       - '&7* O Administrador &6{admin} &7agendou uma limpeza de chat.'
-      - '&7* O Chat ser· limpo daqui a &6{tempo} &7segundos!'
+      - '&7* O Chat ser√° limpo daqui a &6{tempo} &7segundos!'
       - '&7* Plugin by &6JaoBalalao&7.'
       
-    # Mensagem que aparecer· ao limpar o chat pelo comando /clearchat.
+    # Mensagem que aparecer√° ao limpar o chat pelo comando /clearchat.
     chatLimpoAdmin:
       - '&7* O Chat foi limpo por &6{admin}&7!'
       - '&7* Plugin by &6JaoBalalao&7.'
+      
+    # Mensagem na ActionBAR de aviso quando o tempo atingir o "tempoAviso" acima.
+    iraLimparAutomatico_ActionBar: '&7* O Chat ser√° limpo daqui a &6{tempo} &7segundos!'
+    
+    # Mensagem na ActionBAR  de aviso quando o tempo zerar e o chat for limpo.
+    chatLimpoAutomatico_ActionBar: '&7* O Chat foi limpo automaticamente!'
+      
+    # Mensagem na ActionBAR  que aparecer√° ao digitar o comando /clearchat.
+    iraLimparAdmin_ActionBar: '&7* O Administrador &6{admin} &7agendou uma limpeza de chat. &6({tempo}s)'
+      
+    # Mensagem na ActionBAR  que aparecer√° ao limpar o chat pelo comando /clearchat.
+    chatLimpoAdmin_ActionBar: '&7* O Chat foi limpo por &6{admin}&7!'
